@@ -1,5 +1,6 @@
 import * as _m0 from "protobufjs/minimal";
-import { isSet, Exact, DeepPartial } from "@osmonauts/helpers";
+import { isSet, DeepPartial, Exact } from "@osmonauts/helpers";
+export const protobufPackage = "ibc.applications.transfer.v2";
 
 /**
  * FungibleTokenPacketData defines a struct for the packet payload

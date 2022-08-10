@@ -3,7 +3,8 @@ import { SignMode, signModeFromJSON, signModeToJSON } from "../signing/v1beta1/s
 import { CompactBitArray } from "../../crypto/multisig/v1beta1/multisig";
 import { Coin } from "../../base/v1beta1/coin";
 import * as _m0 from "protobufjs/minimal";
-import { isSet, bytesFromBase64, base64FromBytes, Exact, DeepPartial, Long } from "@osmonauts/helpers";
+import { isSet, bytesFromBase64, base64FromBytes, DeepPartial, Exact, Long } from "@osmonauts/helpers";
+export const protobufPackage = "cosmos.tx.v1beta1";
 
 /** Tx is the standard type used for broadcasting transactions. */
 export interface Tx {

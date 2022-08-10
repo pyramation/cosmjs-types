@@ -9,7 +9,8 @@ import {
   Params,
 } from "./staking";
 import * as _m0 from "protobufjs/minimal";
-import { isSet, Exact, DeepPartial, Long } from "@osmonauts/helpers";
+import { isSet, DeepPartial, Exact, Long } from "@osmonauts/helpers";
+export const protobufPackage = "cosmos.staking.v1beta1";
 
 /** QueryValidatorsRequest is request type for Query/Validators RPC method. */
 export interface QueryValidatorsRequest {

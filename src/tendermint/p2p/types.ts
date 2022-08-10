@@ -1,5 +1,6 @@
 import * as _m0 from "protobufjs/minimal";
-import { isSet, Exact, DeepPartial, Long, bytesFromBase64, base64FromBytes } from "@osmonauts/helpers";
+import { isSet, DeepPartial, Exact, Long, bytesFromBase64, base64FromBytes } from "@osmonauts/helpers";
+export const protobufPackage = "tendermint.p2p";
 export interface NetAddress {
   id: string;
   ip: string;

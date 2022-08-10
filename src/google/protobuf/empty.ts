@@ -1,5 +1,6 @@
 import * as _m0 from "protobufjs/minimal";
-import { Exact, DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial, Exact } from "@osmonauts/helpers";
+export const protobufPackage = "google.protobuf";
 
 /**
  * A generic empty message that you can re-use to avoid defining duplicated

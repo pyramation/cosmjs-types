@@ -1,5 +1,6 @@
 import * as _m0 from "protobufjs/minimal";
-import { Long, isSet, Exact, DeepPartial } from "@osmonauts/helpers";
+import { Long, isSet, DeepPartial, Exact } from "@osmonauts/helpers";
+export const protobufPackage = "cosmos.capability.v1beta1";
 
 /**
  * Capability defines an implementation of an object capability. The index

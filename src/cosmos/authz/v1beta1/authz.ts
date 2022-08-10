@@ -1,7 +1,8 @@
 import { Any } from "../../../google/protobuf/any";
 import { Timestamp } from "../../../google/protobuf/timestamp";
 import * as _m0 from "protobufjs/minimal";
-import { isSet, Exact, DeepPartial, toTimestamp, fromTimestamp, fromJsonTimestamp } from "@osmonauts/helpers";
+import { isSet, DeepPartial, Exact, fromJsonTimestamp, fromTimestamp } from "@osmonauts/helpers";
+export const protobufPackage = "cosmos.authz.v1beta1";
 
 /**
  * GenericAuthorization gives the grantee unrestricted permissions to execute
@@ -18,7 +19,7 @@ export interface GenericAuthorization {
  */
 export interface Grant {
   authorization: Any;
-  expiration: Date;
+  expiration: Timestamp;
 }
 
 /**
@@ -31,7 +32,7 @@ export interface GrantAuthorization {
   granter: string;
   grantee: string;
   authorization: Any;
-  expiration: Date;
+  expiration: Timestamp;
 }
 
 function createBaseGenericAuthorization(): GenericAuthorization {
@@ -104,7 +105,7 @@ export const Grant = {
     }
 
     if (message.expiration !== undefined) {
-      Timestamp.encode(toTimestamp(message.expiration), writer.uint32(18).fork()).ldelim();
+      Timestamp.encode(message.expiration, writer.uint32(18).fork()).ldelim();
     }
 
     return writer;
@@ -124,7 +125,7 @@ export const Grant = {
           break;
 
         case 2:
-          message.expiration = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          message.expiration = Timestamp.decode(reader, reader.uint32());
           break;
 
         default:
@@ -147,7 +148,7 @@ export const Grant = {
     const obj: any = {};
     message.authorization !== undefined &&
       (obj.authorization = message.authorization ? Any.toJSON(message.authorization) : undefined);
-    message.expiration !== undefined && (obj.expiration = message.expiration.toISOString());
+    message.expiration !== undefined && (obj.expiration = fromTimestamp(message.expiration).toISOString());
     return obj;
   },
 
@@ -157,7 +158,10 @@ export const Grant = {
       object.authorization !== undefined && object.authorization !== null
         ? Any.fromPartial(object.authorization)
         : undefined;
-    message.expiration = object.expiration ?? undefined;
+    message.expiration =
+      object.expiration !== undefined && object.expiration !== null
+        ? Timestamp.fromPartial(object.expiration)
+        : undefined;
     return message;
   },
 };
@@ -186,7 +190,7 @@ export const GrantAuthorization = {
     }
 
     if (message.expiration !== undefined) {
-      Timestamp.encode(toTimestamp(message.expiration), writer.uint32(34).fork()).ldelim();
+      Timestamp.encode(message.expiration, writer.uint32(34).fork()).ldelim();
     }
 
     return writer;
@@ -214,7 +218,7 @@ export const GrantAuthorization = {
           break;
 
         case 4:
-          message.expiration = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          message.expiration = Timestamp.decode(reader, reader.uint32());
           break;
 
         default:
@@ -241,7 +245,7 @@ export const GrantAuthorization = {
     message.grantee !== undefined && (obj.grantee = message.grantee);
     message.authorization !== undefined &&
       (obj.authorization = message.authorization ? Any.toJSON(message.authorization) : undefined);
-    message.expiration !== undefined && (obj.expiration = message.expiration.toISOString());
+    message.expiration !== undefined && (obj.expiration = fromTimestamp(message.expiration).toISOString());
     return obj;
   },
 
@@ -253,7 +257,10 @@ export const GrantAuthorization = {
       object.authorization !== undefined && object.authorization !== null
         ? Any.fromPartial(object.authorization)
         : undefined;
-    message.expiration = object.expiration ?? undefined;
+    message.expiration =
+      object.expiration !== undefined && object.expiration !== null
+        ? Timestamp.fromPartial(object.expiration)
+        : undefined;
     return message;
   },
 };

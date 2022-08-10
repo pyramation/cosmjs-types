@@ -3,7 +3,8 @@ import { Timestamp } from "../../../google/protobuf/timestamp";
 import { Duration } from "../../../google/protobuf/duration";
 import { Any } from "../../../google/protobuf/any";
 import * as _m0 from "protobufjs/minimal";
-import { toTimestamp, fromTimestamp, isSet, fromJsonTimestamp, Exact, DeepPartial } from "@osmonauts/helpers";
+import { isSet, fromJsonTimestamp, fromTimestamp, DeepPartial, Exact } from "@osmonauts/helpers";
+export const protobufPackage = "cosmos.feegrant.v1beta1";
 
 /**
  * BasicAllowance implements Allowance with a one-time grant of tokens
@@ -18,7 +19,7 @@ export interface BasicAllowance {
   spendLimit: Coin[];
 
   /** expiration specifies an optional time when this allowance expires */
-  expiration: Date;
+  expiration: Timestamp;
 }
 
 /**
@@ -33,7 +34,7 @@ export interface PeriodicAllowance {
    * period specifies the time duration in which period_spend_limit coins can
    * be spent before that allowance is reset
    */
-  period: string;
+  period: Duration;
 
   /**
    * period_spend_limit specifies the maximum number of coins that can be spent
@@ -49,7 +50,7 @@ export interface PeriodicAllowance {
    * it is calculated from the start time of the first transaction after the
    * last period ended
    */
-  periodReset: Date;
+  periodReset: Timestamp;
 }
 
 /** AllowedMsgAllowance creates allowance only for specified message types. */
@@ -87,7 +88,7 @@ export const BasicAllowance = {
     }
 
     if (message.expiration !== undefined) {
-      Timestamp.encode(toTimestamp(message.expiration), writer.uint32(18).fork()).ldelim();
+      Timestamp.encode(message.expiration, writer.uint32(18).fork()).ldelim();
     }
 
     return writer;
@@ -107,7 +108,7 @@ export const BasicAllowance = {
           break;
 
         case 2:
-          message.expiration = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          message.expiration = Timestamp.decode(reader, reader.uint32());
           break;
 
         default:
@@ -137,14 +138,17 @@ export const BasicAllowance = {
       obj.spendLimit = [];
     }
 
-    message.expiration !== undefined && (obj.expiration = message.expiration.toISOString());
+    message.expiration !== undefined && (obj.expiration = fromTimestamp(message.expiration).toISOString());
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<BasicAllowance>, I>>(object: I): BasicAllowance {
     const message = createBaseBasicAllowance();
     message.spendLimit = object.spendLimit?.map((e) => Coin.fromPartial(e)) || [];
-    message.expiration = object.expiration ?? undefined;
+    message.expiration =
+      object.expiration !== undefined && object.expiration !== null
+        ? Timestamp.fromPartial(object.expiration)
+        : undefined;
     return message;
   },
 };
@@ -178,7 +182,7 @@ export const PeriodicAllowance = {
     }
 
     if (message.periodReset !== undefined) {
-      Timestamp.encode(toTimestamp(message.periodReset), writer.uint32(42).fork()).ldelim();
+      Timestamp.encode(message.periodReset, writer.uint32(42).fork()).ldelim();
     }
 
     return writer;
@@ -210,7 +214,7 @@ export const PeriodicAllowance = {
           break;
 
         case 5:
-          message.periodReset = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          message.periodReset = Timestamp.decode(reader, reader.uint32());
           break;
 
         default:
@@ -225,7 +229,7 @@ export const PeriodicAllowance = {
   fromJSON(object: any): PeriodicAllowance {
     return {
       basic: isSet(object.basic) ? BasicAllowance.fromJSON(object.basic) : undefined,
-      period: isSet(object.period) ? String(object.period) : undefined,
+      period: isSet(object.period) ? Duration.fromJSON(object.period) : undefined,
       periodSpendLimit: Array.isArray(object?.periodSpendLimit)
         ? object.periodSpendLimit.map((e: any) => Coin.fromJSON(e))
         : [],
@@ -254,7 +258,7 @@ export const PeriodicAllowance = {
       obj.periodCanSpend = [];
     }
 
-    message.periodReset !== undefined && (obj.periodReset = message.periodReset.toISOString());
+    message.periodReset !== undefined && (obj.periodReset = fromTimestamp(message.periodReset).toISOString());
     return obj;
   },
 
@@ -267,7 +271,10 @@ export const PeriodicAllowance = {
     message.period = object.period ?? undefined;
     message.periodSpendLimit = object.periodSpendLimit?.map((e) => Coin.fromPartial(e)) || [];
     message.periodCanSpend = object.periodCanSpend?.map((e) => Coin.fromPartial(e)) || [];
-    message.periodReset = object.periodReset ?? undefined;
+    message.periodReset =
+      object.periodReset !== undefined && object.periodReset !== null
+        ? Timestamp.fromPartial(object.periodReset)
+        : undefined;
     return message;
   },
 };

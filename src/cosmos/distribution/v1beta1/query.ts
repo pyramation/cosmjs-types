@@ -8,7 +8,8 @@ import {
 } from "./distribution";
 import { DecCoin } from "../../base/v1beta1/coin";
 import * as _m0 from "protobufjs/minimal";
-import { Exact, DeepPartial, isSet, Long } from "@osmonauts/helpers";
+import { DeepPartial, Exact, isSet, Long } from "@osmonauts/helpers";
+export const protobufPackage = "cosmos.distribution.v1beta1";
 
 /** QueryParamsRequest is the request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {}

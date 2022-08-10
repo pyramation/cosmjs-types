@@ -1,5 +1,6 @@
 import * as _m0 from "protobufjs/minimal";
-import { isSet, Exact, DeepPartial } from "@osmonauts/helpers";
+import { isSet, DeepPartial, Exact } from "@osmonauts/helpers";
+export const protobufPackage = "cosmos.authz.v1beta1";
 
 /** EventGrant is emitted on Msg/Grant */
 export interface EventGrant {

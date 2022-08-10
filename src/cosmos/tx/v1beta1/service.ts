@@ -4,7 +4,8 @@ import { TxResponse, GasInfo, Result } from "../../base/abci/v1beta1/abci";
 import { BlockID } from "../../../tendermint/types/types";
 import { Block } from "../../../tendermint/types/block";
 import * as _m0 from "protobufjs/minimal";
-import { isSet, Exact, DeepPartial, bytesFromBase64, base64FromBytes, Long } from "@osmonauts/helpers";
+import { isSet, DeepPartial, Exact, bytesFromBase64, base64FromBytes, Long } from "@osmonauts/helpers";
+export const protobufPackage = "cosmos.tx.v1beta1";
 
 /** OrderBy defines the sorting order */
 export enum OrderBy {

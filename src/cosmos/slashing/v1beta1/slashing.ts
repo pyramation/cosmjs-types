@@ -2,16 +2,16 @@ import { Timestamp } from "../../../google/protobuf/timestamp";
 import { Duration } from "../../../google/protobuf/duration";
 import * as _m0 from "protobufjs/minimal";
 import {
-  toTimestamp,
   Long,
-  fromTimestamp,
   isSet,
   fromJsonTimestamp,
-  Exact,
+  fromTimestamp,
   DeepPartial,
+  Exact,
   bytesFromBase64,
   base64FromBytes,
 } from "@osmonauts/helpers";
+export const protobufPackage = "cosmos.slashing.v1beta1";
 
 /**
  * ValidatorSigningInfo defines a validator's signing info for monitoring their
@@ -31,7 +31,7 @@ export interface ValidatorSigningInfo {
   indexOffset: Long;
 
   /** Timestamp until which the validator is jailed due to liveness downtime. */
-  jailedUntil: Date;
+  jailedUntil: Timestamp;
 
   /**
    * Whether or not a validator has been tombstoned (killed out of validator set). It is set
@@ -50,7 +50,7 @@ export interface ValidatorSigningInfo {
 export interface Params {
   signedBlocksWindow: Long;
   minSignedPerWindow: Uint8Array;
-  downtimeJailDuration: string;
+  downtimeJailDuration: Duration;
   slashFractionDoubleSign: Uint8Array;
   slashFractionDowntime: Uint8Array;
 }
@@ -81,7 +81,7 @@ export const ValidatorSigningInfo = {
     }
 
     if (message.jailedUntil !== undefined) {
-      Timestamp.encode(toTimestamp(message.jailedUntil), writer.uint32(34).fork()).ldelim();
+      Timestamp.encode(message.jailedUntil, writer.uint32(34).fork()).ldelim();
     }
 
     if (message.tombstoned === true) {
@@ -117,7 +117,7 @@ export const ValidatorSigningInfo = {
           break;
 
         case 4:
-          message.jailedUntil = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          message.jailedUntil = Timestamp.decode(reader, reader.uint32());
           break;
 
         case 5:
@@ -155,7 +155,7 @@ export const ValidatorSigningInfo = {
     message.address !== undefined && (obj.address = message.address);
     message.startHeight !== undefined && (obj.startHeight = (message.startHeight || Long.ZERO).toString());
     message.indexOffset !== undefined && (obj.indexOffset = (message.indexOffset || Long.ZERO).toString());
-    message.jailedUntil !== undefined && (obj.jailedUntil = message.jailedUntil.toISOString());
+    message.jailedUntil !== undefined && (obj.jailedUntil = fromTimestamp(message.jailedUntil).toISOString());
     message.tombstoned !== undefined && (obj.tombstoned = message.tombstoned);
     message.missedBlocksCounter !== undefined &&
       (obj.missedBlocksCounter = (message.missedBlocksCounter || Long.ZERO).toString());
@@ -173,7 +173,10 @@ export const ValidatorSigningInfo = {
       object.indexOffset !== undefined && object.indexOffset !== null
         ? Long.fromValue(object.indexOffset)
         : Long.ZERO;
-    message.jailedUntil = object.jailedUntil ?? undefined;
+    message.jailedUntil =
+      object.jailedUntil !== undefined && object.jailedUntil !== null
+        ? Timestamp.fromPartial(object.jailedUntil)
+        : undefined;
     message.tombstoned = object.tombstoned ?? false;
     message.missedBlocksCounter =
       object.missedBlocksCounter !== undefined && object.missedBlocksCounter !== null
@@ -265,7 +268,7 @@ export const Params = {
         ? bytesFromBase64(object.minSignedPerWindow)
         : new Uint8Array(),
       downtimeJailDuration: isSet(object.downtimeJailDuration)
-        ? String(object.downtimeJailDuration)
+        ? Duration.fromJSON(object.downtimeJailDuration)
         : undefined,
       slashFractionDoubleSign: isSet(object.slashFractionDoubleSign)
         ? bytesFromBase64(object.slashFractionDoubleSign)

@@ -1,7 +1,8 @@
 import { Header, Data, Commit } from "./types";
 import { EvidenceList } from "./evidence";
 import * as _m0 from "protobufjs/minimal";
-import { isSet, Exact, DeepPartial } from "@osmonauts/helpers";
+import { isSet, DeepPartial, Exact } from "@osmonauts/helpers";
+export const protobufPackage = "tendermint.types";
 export interface Block {
   header: Header;
   data: Data;

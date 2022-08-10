@@ -1,6 +1,7 @@
 import { Any } from "../../../google/protobuf/any";
 import * as _m0 from "protobufjs/minimal";
-import { Long, isSet, Exact, DeepPartial } from "@osmonauts/helpers";
+import { Long, isSet, DeepPartial, Exact } from "@osmonauts/helpers";
+export const protobufPackage = "cosmos.auth.v1beta1";
 
 /**
  * BaseAccount defines a base account type. It contains all the necessary fields

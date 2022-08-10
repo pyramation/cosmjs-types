@@ -8,15 +8,15 @@ import { ValidatorSet } from "../../../../tendermint/types/validator";
 import * as _m0 from "protobufjs/minimal";
 import {
   isSet,
-  Exact,
   DeepPartial,
-  toTimestamp,
-  fromTimestamp,
+  Exact,
   fromJsonTimestamp,
   bytesFromBase64,
+  fromTimestamp,
   base64FromBytes,
   Long,
 } from "@osmonauts/helpers";
+export const protobufPackage = "ibc.lightclients.tendermint.v1";
 
 /**
  * ClientState from Tendermint tracks the current validator set, latest height,
@@ -30,13 +30,13 @@ export interface ClientState {
    * duration of the period since the LastestTimestamp during which the
    * submitted headers are valid for upgrade
    */
-  trustingPeriod: string;
+  trustingPeriod: Duration;
 
   /** duration of the staking unbonding period */
-  unbondingPeriod: string;
+  unbondingPeriod: Duration;
 
   /** defines how much new (untrusted) header's Time can drift into the future. */
-  maxClockDrift: string;
+  maxClockDrift: Duration;
 
   /** Block height when the client was frozen due to a misbehaviour */
   frozenHeight: Height;
@@ -77,7 +77,7 @@ export interface ConsensusState {
    * timestamp that corresponds to the block height in which the ConsensusState
    * was stored.
    */
-  timestamp: Date;
+  timestamp: Timestamp;
 
   /** commitment root (i.e app hash) */
   root: MerkleRoot;
@@ -255,9 +255,9 @@ export const ClientState = {
     return {
       chainId: isSet(object.chainId) ? String(object.chainId) : "",
       trustLevel: isSet(object.trustLevel) ? Fraction.fromJSON(object.trustLevel) : undefined,
-      trustingPeriod: isSet(object.trustingPeriod) ? String(object.trustingPeriod) : undefined,
-      unbondingPeriod: isSet(object.unbondingPeriod) ? String(object.unbondingPeriod) : undefined,
-      maxClockDrift: isSet(object.maxClockDrift) ? String(object.maxClockDrift) : undefined,
+      trustingPeriod: isSet(object.trustingPeriod) ? Duration.fromJSON(object.trustingPeriod) : undefined,
+      unbondingPeriod: isSet(object.unbondingPeriod) ? Duration.fromJSON(object.unbondingPeriod) : undefined,
+      maxClockDrift: isSet(object.maxClockDrift) ? Duration.fromJSON(object.maxClockDrift) : undefined,
       frozenHeight: isSet(object.frozenHeight) ? Height.fromJSON(object.frozenHeight) : undefined,
       latestHeight: isSet(object.latestHeight) ? Height.fromJSON(object.latestHeight) : undefined,
       proofSpecs: Array.isArray(object?.proofSpecs)
@@ -342,7 +342,7 @@ function createBaseConsensusState(): ConsensusState {
 export const ConsensusState = {
   encode(message: ConsensusState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.timestamp !== undefined) {
-      Timestamp.encode(toTimestamp(message.timestamp), writer.uint32(10).fork()).ldelim();
+      Timestamp.encode(message.timestamp, writer.uint32(10).fork()).ldelim();
     }
 
     if (message.root !== undefined) {
@@ -366,7 +366,7 @@ export const ConsensusState = {
 
       switch (tag >>> 3) {
         case 1:
-          message.timestamp = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          message.timestamp = Timestamp.decode(reader, reader.uint32());
           break;
 
         case 2:
@@ -398,7 +398,7 @@ export const ConsensusState = {
 
   toJSON(message: ConsensusState): unknown {
     const obj: any = {};
-    message.timestamp !== undefined && (obj.timestamp = message.timestamp.toISOString());
+    message.timestamp !== undefined && (obj.timestamp = fromTimestamp(message.timestamp).toISOString());
     message.root !== undefined && (obj.root = message.root ? MerkleRoot.toJSON(message.root) : undefined);
     message.nextValidatorsHash !== undefined &&
       (obj.nextValidatorsHash = base64FromBytes(
@@ -409,7 +409,10 @@ export const ConsensusState = {
 
   fromPartial<I extends Exact<DeepPartial<ConsensusState>, I>>(object: I): ConsensusState {
     const message = createBaseConsensusState();
-    message.timestamp = object.timestamp ?? undefined;
+    message.timestamp =
+      object.timestamp !== undefined && object.timestamp !== null
+        ? Timestamp.fromPartial(object.timestamp)
+        : undefined;
     message.root =
       object.root !== undefined && object.root !== null ? MerkleRoot.fromPartial(object.root) : undefined;
     message.nextValidatorsHash = object.nextValidatorsHash ?? new Uint8Array();

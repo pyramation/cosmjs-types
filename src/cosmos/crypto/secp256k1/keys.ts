@@ -1,5 +1,6 @@
 import * as _m0 from "protobufjs/minimal";
-import { isSet, bytesFromBase64, base64FromBytes, Exact, DeepPartial } from "@osmonauts/helpers";
+import { isSet, bytesFromBase64, base64FromBytes, DeepPartial, Exact } from "@osmonauts/helpers";
+export const protobufPackage = "cosmos.crypto.secp256k1";
 
 /**
  * PubKey defines a secp256k1 public key

@@ -14,6 +14,11 @@ telescope({
     outPath: join(__dirname, '/../src'),
     options: {
         includePackageVar: true,
+        excluded: {
+            protos: [
+                'cosmos/authz/v1beta1/event.proto'
+            ]
+        },
         typingsFormat: {
             useExact: true,
             timestamp: 'timestamp',
@@ -24,7 +29,9 @@ telescope({
         },
         rpcClients: {
             enabled: true,
-            camelCase: false
+            bundle: false,
+            camelCase: false,
+            addToBundle: false
         },
         aminoEncoding: {
             enabled: false

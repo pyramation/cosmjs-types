@@ -185,8 +185,6 @@ import * as _255 from "./gov/v1beta1/tx.rpc.msg";
 import * as _256 from "./slashing/v1beta1/tx.rpc.msg";
 import * as _257 from "./staking/v1beta1/tx.rpc.msg";
 import * as _258 from "./vesting/v1beta1/tx.rpc.msg";
-import * as _270 from "./rpc.query";
-import * as _271 from "./rpc.tx";
 export namespace cosmos {
   export namespace auth {
     export const v1beta1 = { ..._10, ..._11, ..._12, ..._13, ..._14, ..._15, ..._211, ..._225 };
@@ -383,5 +381,4 @@ export namespace cosmos {
   export namespace vesting {
     export const v1beta1 = { ..._145, ..._146, ..._147, ..._148, ..._248, ..._258 };
   }
-  export const ClientFactory = { ..._270, ..._271 };
 }

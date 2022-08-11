@@ -30,8 +30,7 @@ telescope({
         rpcClients: {
             enabled: true,
             bundle: false,
-            camelCase: false,
-            addToBundle: false
+            camelCase: false
         },
         aminoEncoding: {
             enabled: false

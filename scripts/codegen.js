@@ -8,8 +8,7 @@ telescope({
         'wasmd-0.25/proto',
         'wasmd-0.25/third_party/proto',
         'cosmos-sdk-0.45/proto',
-        'cosmos-sdk-0.45/third_party/proto',
-        'third_party'
+        'cosmos-sdk-0.45/third_party/proto'
     ],
     outPath: join(__dirname, '/../src'),
     options: {

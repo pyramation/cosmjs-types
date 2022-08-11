@@ -1,5 +1,6 @@
 import * as _m0 from "protobufjs/minimal";
-import { bytesFromBase64, base64FromBytes, Exact, DeepPartial } from "@osmonauts/helpers";
+import { bytesFromBase64, base64FromBytes, DeepPartial, Exact } from "@osmonauts/helpers";
+export const protobufPackage = "cosmos.genutil.v1beta1";
 
 /** GenesisState defines the raw genesis transaction in JSON. */
 export interface GenesisState {

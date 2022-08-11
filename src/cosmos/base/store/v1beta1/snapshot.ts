@@ -1,5 +1,6 @@
 import * as _m0 from "protobufjs/minimal";
-import { isSet, Exact, DeepPartial, Long, bytesFromBase64, base64FromBytes } from "@osmonauts/helpers";
+import { isSet, DeepPartial, Exact, Long, bytesFromBase64, base64FromBytes } from "@osmonauts/helpers";
+export const protobufPackage = "cosmos.base.store.v1beta1";
 
 /** SnapshotItem is an item contained in a rootmulti.Store snapshot. */
 export interface SnapshotItem {

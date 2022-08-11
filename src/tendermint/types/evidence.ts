@@ -2,15 +2,8 @@ import { Vote, LightBlock } from "./types";
 import { Timestamp } from "../../google/protobuf/timestamp";
 import { Validator } from "./validator";
 import * as _m0 from "protobufjs/minimal";
-import {
-  isSet,
-  Exact,
-  DeepPartial,
-  toTimestamp,
-  Long,
-  fromTimestamp,
-  fromJsonTimestamp,
-} from "@osmonauts/helpers";
+import { isSet, DeepPartial, Exact, Long, fromJsonTimestamp, fromTimestamp } from "@osmonauts/helpers";
+export const protobufPackage = "tendermint.types";
 export interface Evidence {
   duplicateVoteEvidence?: DuplicateVoteEvidence;
   lightClientAttackEvidence?: LightClientAttackEvidence;
@@ -22,7 +15,7 @@ export interface DuplicateVoteEvidence {
   voteB: Vote;
   totalVotingPower: Long;
   validatorPower: Long;
-  timestamp: Date;
+  timestamp: Timestamp;
 }
 
 /** LightClientAttackEvidence contains evidence of a set of validators attempting to mislead a light client. */
@@ -31,7 +24,7 @@ export interface LightClientAttackEvidence {
   commonHeight: Long;
   byzantineValidators: Validator[];
   totalVotingPower: Long;
-  timestamp: Date;
+  timestamp: Timestamp;
 }
 export interface EvidenceList {
   evidence: Evidence[];
@@ -150,7 +143,7 @@ export const DuplicateVoteEvidence = {
     }
 
     if (message.timestamp !== undefined) {
-      Timestamp.encode(toTimestamp(message.timestamp), writer.uint32(42).fork()).ldelim();
+      Timestamp.encode(message.timestamp, writer.uint32(42).fork()).ldelim();
     }
 
     return writer;
@@ -182,7 +175,7 @@ export const DuplicateVoteEvidence = {
           break;
 
         case 5:
-          message.timestamp = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          message.timestamp = Timestamp.decode(reader, reader.uint32());
           break;
 
         default:
@@ -212,7 +205,7 @@ export const DuplicateVoteEvidence = {
       (obj.totalVotingPower = (message.totalVotingPower || Long.ZERO).toString());
     message.validatorPower !== undefined &&
       (obj.validatorPower = (message.validatorPower || Long.ZERO).toString());
-    message.timestamp !== undefined && (obj.timestamp = message.timestamp.toISOString());
+    message.timestamp !== undefined && (obj.timestamp = fromTimestamp(message.timestamp).toISOString());
     return obj;
   },
 
@@ -230,7 +223,10 @@ export const DuplicateVoteEvidence = {
       object.validatorPower !== undefined && object.validatorPower !== null
         ? Long.fromValue(object.validatorPower)
         : Long.ZERO;
-    message.timestamp = object.timestamp ?? undefined;
+    message.timestamp =
+      object.timestamp !== undefined && object.timestamp !== null
+        ? Timestamp.fromPartial(object.timestamp)
+        : undefined;
     return message;
   },
 };
@@ -264,7 +260,7 @@ export const LightClientAttackEvidence = {
     }
 
     if (message.timestamp !== undefined) {
-      Timestamp.encode(toTimestamp(message.timestamp), writer.uint32(42).fork()).ldelim();
+      Timestamp.encode(message.timestamp, writer.uint32(42).fork()).ldelim();
     }
 
     return writer;
@@ -296,7 +292,7 @@ export const LightClientAttackEvidence = {
           break;
 
         case 5:
-          message.timestamp = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          message.timestamp = Timestamp.decode(reader, reader.uint32());
           break;
 
         default:
@@ -338,7 +334,7 @@ export const LightClientAttackEvidence = {
 
     message.totalVotingPower !== undefined &&
       (obj.totalVotingPower = (message.totalVotingPower || Long.ZERO).toString());
-    message.timestamp !== undefined && (obj.timestamp = message.timestamp.toISOString());
+    message.timestamp !== undefined && (obj.timestamp = fromTimestamp(message.timestamp).toISOString());
     return obj;
   },
 
@@ -359,7 +355,10 @@ export const LightClientAttackEvidence = {
       object.totalVotingPower !== undefined && object.totalVotingPower !== null
         ? Long.fromValue(object.totalVotingPower)
         : Long.ZERO;
-    message.timestamp = object.timestamp ?? undefined;
+    message.timestamp =
+      object.timestamp !== undefined && object.timestamp !== null
+        ? Timestamp.fromPartial(object.timestamp)
+        : undefined;
     return message;
   },
 };

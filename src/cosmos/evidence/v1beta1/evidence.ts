@@ -1,14 +1,7 @@
 import { Timestamp } from "../../../google/protobuf/timestamp";
 import * as _m0 from "protobufjs/minimal";
-import {
-  toTimestamp,
-  Long,
-  fromTimestamp,
-  isSet,
-  fromJsonTimestamp,
-  Exact,
-  DeepPartial,
-} from "@osmonauts/helpers";
+import { Long, isSet, fromJsonTimestamp, fromTimestamp, DeepPartial, Exact } from "@osmonauts/helpers";
+export const protobufPackage = "cosmos.evidence.v1beta1";
 
 /**
  * Equivocation implements the Evidence interface and defines evidence of double
@@ -16,7 +9,7 @@ import {
  */
 export interface Equivocation {
   height: Long;
-  time: Date;
+  time: Timestamp;
   power: Long;
   consensusAddress: string;
 }
@@ -37,7 +30,7 @@ export const Equivocation = {
     }
 
     if (message.time !== undefined) {
-      Timestamp.encode(toTimestamp(message.time), writer.uint32(18).fork()).ldelim();
+      Timestamp.encode(message.time, writer.uint32(18).fork()).ldelim();
     }
 
     if (!message.power.isZero()) {
@@ -65,7 +58,7 @@ export const Equivocation = {
           break;
 
         case 2:
-          message.time = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          message.time = Timestamp.decode(reader, reader.uint32());
           break;
 
         case 3:
@@ -97,7 +90,7 @@ export const Equivocation = {
   toJSON(message: Equivocation): unknown {
     const obj: any = {};
     message.height !== undefined && (obj.height = (message.height || Long.ZERO).toString());
-    message.time !== undefined && (obj.time = message.time.toISOString());
+    message.time !== undefined && (obj.time = fromTimestamp(message.time).toISOString());
     message.power !== undefined && (obj.power = (message.power || Long.ZERO).toString());
     message.consensusAddress !== undefined && (obj.consensusAddress = message.consensusAddress);
     return obj;
@@ -107,7 +100,8 @@ export const Equivocation = {
     const message = createBaseEquivocation();
     message.height =
       object.height !== undefined && object.height !== null ? Long.fromValue(object.height) : Long.ZERO;
-    message.time = object.time ?? undefined;
+    message.time =
+      object.time !== undefined && object.time !== null ? Timestamp.fromPartial(object.time) : undefined;
     message.power =
       object.power !== undefined && object.power !== null ? Long.fromValue(object.power) : Long.ZERO;
     message.consensusAddress = object.consensusAddress ?? "";

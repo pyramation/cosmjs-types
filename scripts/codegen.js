@@ -3,34 +3,38 @@
 const { join } = require('path');
 const telescope = require('@osmonauts/telescope').default;
 
-const protoRuns = [
-    [
-
-        'wasmd-0.18/proto',
-        'wasmd-0.18/third_party/proto',
-    ],
-    [
+telescope({
+    protoDirs: [
         'wasmd-0.25/proto',
         'wasmd-0.25/third_party/proto',
-    ],
-    [
         'cosmos-sdk-0.45/proto',
         'cosmos-sdk-0.45/third_party/proto'
-    ]
-];
-const outPath = join(__dirname, '/../src');
-
-protoRuns.forEach(dirs=>{
-    telescope({
-        protoDirs: [
-            'third_party',
-            ...dirs
-        ],
-        outPath,
-        options: {
-            includeAminos: false,
-            includeLCDClient: false
+    ],
+    outPath: join(__dirname, '/../src'),
+    options: {
+        includePackageVar: true,
+        excluded: {
+            protos: [
+                'cosmos/authz/v1beta1/event.proto'
+            ]
+        },
+        typingsFormat: {
+            useExact: true,
+            timestamp: 'timestamp',
+            duration: 'duration'
+        },
+        lcdClients: {
+            enabled: false
+        },
+        rpcClients: {
+            enabled: true,
+            bundle: false,
+            camelCase: false
+        },
+        aminoEncoding: {
+            enabled: false
         }
-    });    
+    }
+}).then(() => {
+    console.log('✨ All Done!');
 })
-

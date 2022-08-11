@@ -1,5 +1,6 @@
 import * as _m0 from "protobufjs/minimal";
-import { Long, isSet, bytesFromBase64, base64FromBytes, Exact, DeepPartial } from "@osmonauts/helpers";
+import { Long, isSet, bytesFromBase64, base64FromBytes, DeepPartial, Exact } from "@osmonauts/helpers";
+export const protobufPackage = "cosmwasm.wasm.v1";
 
 /** MsgIBCSend */
 export interface MsgIBCSend {

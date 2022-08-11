@@ -1,6 +1,7 @@
 import { IdentifiedConnection, ConnectionPaths, Params } from "./connection";
 import * as _m0 from "protobufjs/minimal";
-import { Long, isSet, Exact, DeepPartial } from "@osmonauts/helpers";
+import { Long, isSet, DeepPartial, Exact } from "@osmonauts/helpers";
+export const protobufPackage = "ibc.core.connection.v1";
 
 /** GenesisState defines the ibc connection submodule's genesis state. */
 export interface GenesisState {
